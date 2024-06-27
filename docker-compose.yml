@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web: #This container is for hosting our running server
+    build:
+      context: . #we have to do this because we donot have docker file in the default format
+      dockerfile: dockerfile.dev
+
+
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests: ##this container for running test
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
